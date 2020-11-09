@@ -1,25 +1,3 @@
-#!/usr/bin/env python
-
-'''
-Calculates Region of Interest(ROI) by receiving points from mouse event and transform prespective so that
-we can have top view of scene or ROI. This top view or bird eye view has the property that points are
-distributed uniformally horizontally and vertically(scale for horizontal and vertical direction will be
- different). So for bird eye view points are equally distributed, which was not case for normal view.
-
-YOLO V3 is used to detect humans in frame and by calculating bottom center point of bounding boxe around humans, 
-we transform those points to bird eye view. And then calculates risk factor by calculating distance between
-points and then drawing birds eye view and drawing bounding boxes and distance lines between boxes on frame.
-'''
-
-__title__           = "main.py"
-__Version__         = "1.0"
-__copyright__       = "Copyright 2020 , Social Distancing AI"
-__license__         = "MIT"
-__author__          = "Deepak Birla"
-__email__           = "birla.deepak26@gmail.com"
-__date__            = "2020/05/29"
-__python_version__  = "3.5.2"
-
 # imports
 import cv2
 import numpy as np
@@ -27,19 +5,11 @@ import time
 import argparse
 
 # own modules
-import utills, plot
+import distance, plot
 
 confid = 0.5
 thresh = 0.5
-mouse_pts = []
-
-
-# Function to get points for Region of Interest(ROI) and distance scale. It will take 8 points on first frame using mouse click    
-# event.First four points will define ROI where we want to moniter social distancing. Also these points should form parallel  
-# lines in real world if seen from above(birds eye view). Next 3 points will define 6 feet(unit length) distance in     
-# horizontal and vertical direction and those should form parallel lines with ROI. Unit length we can take based on choice.
-# Points should pe in pre-defined order - bottom-left, bottom-right, top-right, top-left, point 5 and 6 should form     
-# horizontal line and point 5 and 7 should form verticle line. Horizontal and vertical scale will be different. 
+mouse_pts = [] 
 
 # Function will be called on mouse events                                                          
 
@@ -80,8 +50,8 @@ def calculate_social_distancing(vid_path, net, output_dir, output_vid, ln1):
     scale_w, scale_h = utills.get_scale(width, height)
 
     fourcc = cv2.VideoWriter_fourcc(*"XVID")
-    output_movie = cv2.VideoWriter("./output_vid/distancing.avi", fourcc, fps, (width, height))
-    bird_movie = cv2.VideoWriter("./output_vid/bird_eye_view.avi", fourcc, fps, (int(width * scale_w), int(height * scale_h)))
+    #output_movie = cv2.VideoWriter("./output_vid/distancing.avi", fourcc, fps, (width, height))
+    #bird_movie = cv2.VideoWriter("./output_vid/bird_eye_view.avi", fourcc, fps, (int(width * scale_w), int(height * scale_h)))
         
     points = []
     global image
@@ -107,12 +77,7 @@ def calculate_social_distancing(vid_path, net, output_dir, output_vid, ln1):
                     break
                
             points = mouse_pts      
-                 
-        # Using first 4 points or coordinates for perspective transformation. The region marked by these 4 points are 
-        # considered ROI. This polygon shaped ROI is then warped into a rectangle which becomes the bird eye view. 
-        # This bird eye view then has the property property that points are distributed uniformally horizontally and 
-        # vertically(scale for horizontal and vertical direction will be different). So for bird eye view points are 
-        # equally distributed, which was not case for normal view.
+                
         src = np.float32(np.array(points[:4]))
         dst = np.float32([[0, H], [W, H], [W, 0], [0, 0]])
         prespective_transform = cv2.getPerspectiveTransform(src, dst)
@@ -130,7 +95,6 @@ def calculate_social_distancing(vid_path, net, output_dir, output_vid, ln1):
         pnts = np.array(points[:4], np.int32)
         cv2.polylines(frame, [pnts], True, (70, 70, 70), thickness=2)
     
-    ####################################################################################
     
         # YOLO v3
         blob = cv2.dnn.blobFromImage(frame, 1 / 255.0, (416, 416), swapRB=True, crop=False)
