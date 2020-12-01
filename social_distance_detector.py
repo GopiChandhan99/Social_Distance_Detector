@@ -1,4 +1,4 @@
-#Social Distance Detector for pandemic
+#Social Distance Detector 
 import cv2
 import numpy as np
 import argparse
