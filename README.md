@@ -8,16 +8,4 @@ Requirements: OpenCV, NumPy, argparse, Caffe MobileNet SSD model weights, and pr
 
 To run the application: python social_distance_detector.py --video path “videoname.mp4”. 
 
-Output:
-
-<img
-src=“images/pedestrians.jpeg”
-raw=true
-alt=“Subject Pronouns”
-style=“margin-right: 10px;”
-/>
-
-
-
-
 
