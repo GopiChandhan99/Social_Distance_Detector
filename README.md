@@ -10,6 +10,12 @@ To run the application: python social_distance_detector.py --video path “video
 
 Output:
 
+<img
+src=“images/pedestrians.jpeg”
+raw=true
+alt=“Subject Pronouns”
+style=“margin-right: 10px;”
+/>
 
 
 
