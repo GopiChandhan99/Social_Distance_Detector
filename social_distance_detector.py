@@ -128,7 +128,7 @@ if __name__== "__main__":
         cv2.putText(frame, "Person in High Risk : " + str(len(highRisk)) , (20, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
         cv2.putText(frame, "Person in Medium Risk : " + str(len(mediumRisk)) , (20, 40), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
         cv2.putText(frame, "Detected Person : " + str(len(detectionCoordinates)), (20, 60), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-
+        #Displays Output
         drawResult(frame, position)
         if write_video:            
             output_movie.write(frame)
