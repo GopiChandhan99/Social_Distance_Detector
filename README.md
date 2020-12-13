@@ -8,6 +8,7 @@ The main aim of the project is to detect whether the people are maintaining soci
 
 # Working of application in realtime scenario
 <img src="/SocialDistancingReal.jpeg" alt="real"> 
+
 ` ` `
 Software: Python 3
 Requirements: OpenCV, NumPy, argparse, Caffe MobileNet SSD model weights, and prototxt 
