@@ -11,7 +11,6 @@ The main aim of the project is to detect whether the people are maintaining soci
 ` ` `
 Software: Python 3
 Requirements: OpenCV, NumPy, argparse, Caffe MobileNet SSD model weights, and prototxt 
-
 To run the application: python social_distance_detector.py --videopath “videoname.mp4”. 
 ` ` `
 
